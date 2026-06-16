@@ -14,7 +14,7 @@ locals {
 }
 
 module "glue_jobs" {
-  source = "../artifact3-terraform-templates/modules/glue_job"
+  source = "git::https://github.com/jhonnjc15/artifact3-terraform-templates.git//modules/glue_job?ref=main"
 
   artifact_bucket = var.artifact_bucket
   temp_bucket     = var.temp_bucket

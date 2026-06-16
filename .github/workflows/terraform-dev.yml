@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       templates_repository:
-        description: 'Repositorio GitHub del template. Ejemplo: mi-org/artifact3-terraform-templates'
+        description: 'Repositorio GitHub del template'
         required: true
+        default: 'jhonnjc15/artifact3-terraform-templates'
         type: string
       apply:
         description: 'Ejecutar terraform apply'
@@ -16,6 +17,7 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    environment: dev
 
     steps:
       - name: Checkout consumer repo
@@ -39,17 +41,26 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
 
       - name: Create dev.auto.tfvars
         working-directory: artifact3-demo-consumer
         run: |
           cat > dev.auto.tfvars <<EOF_TFVARS
-          aws_region      = "${{ vars.AWS_REGION }}"
-          artifact_bucket = "${{ vars.ARTIFACT_BUCKET }}"
-          temp_bucket     = "${{ vars.TEMP_BUCKET }}"
-          glue_role_arn   = "${{ vars.GLUE_ROLE_ARN }}"
+          aws_region      = "${{ secrets.AWS_REGION }}"
+          artifact_bucket = "${{ secrets.ARTIFACT_BUCKET }}"
+          temp_bucket     = "${{ secrets.TEMP_BUCKET }}"
+          glue_role_arn   = "${{ secrets.GLUE_ROLE_ARN }}"
           EOF_TFVARS
+
+      - name: Show generated tfvars without sensitive values
+        working-directory: artifact3-demo-consumer
+        run: |
+          echo "dev.auto.tfvars created"
+          grep -E "aws_region|artifact_bucket|temp_bucket|glue_role_arn" dev.auto.tfvars
 
       - name: Terraform init
         working-directory: artifact3-demo-consumer
