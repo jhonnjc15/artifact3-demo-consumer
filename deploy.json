@@ -21,14 +21,14 @@
     }
   },
   "athena": {
-    "enabled": false,
+    "enabled": true,
     "sql_path": "./src/sql/create_table.sql",
     "database_name": "db_demo_dev",
     "workgroup_name": "primary",
     "query_name": "ddl-create-table-demo"
   },
   "lambda": {
-    "enabled": false,
+    "enabled": true,
     "function_name": "lambda-demo-dev",
     "description": "Lambda demo para probar el módulo",
     "source_path": "./src/lambda",
