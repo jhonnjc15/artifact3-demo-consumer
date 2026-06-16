@@ -22,10 +22,7 @@
   },
   "athena": {
     "enabled": true,
-    "sql_path": "./src/sql/create_table.sql",
-    "database_name": "db_demo_dev",
-    "workgroup_name": "primary",
-    "query_name": "ddl-create-table-demo"
+    "sql_path": "./src/sql/create_table.sql"
   },
   "lambda": {
     "enabled": true,

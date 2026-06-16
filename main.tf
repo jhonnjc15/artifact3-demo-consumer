@@ -51,9 +51,8 @@ module "glue_jobs" {
 module "athena" {
   source = "git::https://github.com/jhonnjc15/artifact3-terraform-templates.git//modules/athena?ref=main"
 
-  athena        = local.athena_config
-  output_bucket = var.artifact_bucket
-  tags          = local.common_tags
+  athena = local.athena_config
+  tags   = local.common_tags
 }
 
 module "lambda" {

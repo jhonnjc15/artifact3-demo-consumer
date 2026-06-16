@@ -10,8 +10,12 @@ output "athena_database_name" {
   value = module.athena.database_name
 }
 
-output "athena_workgroup_name" {
-  value = module.athena.workgroup_name
+output "athena_table_name" {
+  value = module.athena.table_name
+}
+
+output "athena_s3_location" {
+  value = module.athena.s3_location
 }
 
 output "lambda_function_name" {
