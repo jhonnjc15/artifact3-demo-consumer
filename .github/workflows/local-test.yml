@@ -1,0 +1,34 @@
+name: Local test - Glue demo script
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  run-demo-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout consumer repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run demo Glue script locally
+        run: |
+          python src/libs/demo_print_parameters.py \
+            --JOB_NAME glue-demo-print-parameters-dev \
+            --demo_env dev \
+            --demo_owner data-engineering \
+            --demo_table tabla_demo_parametros \
+            --TempDir s3://bucket-temporal/temporary/ \
+            --job-language python \
+            --enable-metrics true \
+            --enable-glue-datacatalog true

@@ -1,0 +1,22 @@
+{
+  "environment": "dev",
+  "glue_jobs": {
+    "demo_print_parameters": {
+      "enabled": true,
+      "job_name": "glue-demo-print-parameters-dev",
+      "description": "Glue Job demo que imprime default arguments y una tabla creada en memoria",
+      "script_local_path": "./src/libs/demo_print_parameters.py",
+      "glue_version": "4.0",
+      "python_version": "3",
+      "worker_type": "G.1X",
+      "number_of_workers": 2,
+      "timeout": 30,
+      "max_retries": 0,
+      "default_arguments": {
+        "--demo_env": "dev",
+        "--demo_owner": "data-engineering",
+        "--demo_table": "tabla_demo_parametros"
+      }
+    }
+  }
+}

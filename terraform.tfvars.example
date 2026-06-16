@@ -1,0 +1,4 @@
+aws_region      = "us-east-1"
+artifact_bucket = "mi-bucket-artifacts-dev"
+temp_bucket     = "mi-bucket-temp-dev"
+glue_role_arn   = "arn:aws:iam::123456789012:role/mi-role-glue-dev"
