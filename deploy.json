@@ -19,5 +19,22 @@
         "--demo_table": "tabla_demo_parametros"
       }
     }
+  },
+  "athena": {
+    "enabled": false,
+    "sql_path": "./src/sql/create_table.sql",
+    "database_name": "db_demo_dev",
+    "workgroup_name": "primary",
+    "query_name": "ddl-create-table-demo"
+  },
+  "lambda": {
+    "enabled": false,
+    "function_name": "lambda-demo-dev",
+    "description": "Lambda demo para probar el módulo",
+    "source_path": "./src/lambda",
+    "handler": "main.handler",
+    "runtime": "python3.11",
+    "timeout": 30,
+    "memory_size": 256
   }
 }
