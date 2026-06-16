@@ -54,13 +54,14 @@ jobs:
           artifact_bucket = "${{ secrets.ARTIFACT_BUCKET }}"
           temp_bucket     = "${{ secrets.TEMP_BUCKET }}"
           glue_role_arn   = "${{ secrets.GLUE_ROLE_ARN }}"
+          lambda_role_arn = "${{ secrets.LAMBDA_ROLE_ARN }}"
           EOF_TFVARS
 
       - name: Show generated tfvars without sensitive values
         working-directory: artifact3-demo-consumer
         run: |
           echo "dev.auto.tfvars created"
-          grep -E "aws_region|artifact_bucket|temp_bucket|glue_role_arn" dev.auto.tfvars
+          grep -E "aws_region|artifact_bucket|temp_bucket|glue_role_arn|lambda_role_arn" dev.auto.tfvars
 
       - name: Terraform init
         working-directory: artifact3-demo-consumer
