@@ -6,6 +6,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS db_demo_dev.ybwds_copa_brz(
   cost_val_s DOUBLE,
   vkorg STRING,
   vtweg STRING,
+  prueba STRING,
+  fecha DATE,
   ingestion_ts TIMESTAMP
 )
 PARTITIONED BY (ingestion_date STRING)
