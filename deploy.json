@@ -24,7 +24,11 @@
     "ybwds_copa_brz": {
       "enabled": true,
       "sql_path": "./src/sql/ybwds_copa_brz/create_table.sql",
-      "read_existing": false
+      "read_existing": true,
+      "column_operations": {
+        "drop": ["vkorg"],
+        "rename": {"vtweg": "ruta_venta"}
+      }
     }
   },
   "lambda": {
