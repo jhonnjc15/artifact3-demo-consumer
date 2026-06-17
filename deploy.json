@@ -23,7 +23,11 @@
   "athena": {
     "ybwds_copa_brz": {
       "enabled": true,
-      "sql_path": "./src/sql/ybwds_copa_brz/create_table.sql"
+      "sql_path": "./src/sql/ybwds_copa_brz/create_table.sql",
+      "column_operations": {
+        "drop": ["vkorg"],
+        "rename": {"vtweg": "ruta_venta"}
+      }
     }
   },
   "lambda": {
