@@ -96,7 +96,7 @@ def main() -> None:
     print("\nTabla demo creada en memoria:")
     print_table(rows)
 
-    print("\nGlue Job demo finalizado correctamente")
+    print("\nGlue Job demo finalizado correctamente!")
 
 
 if __name__ == "__main__":
