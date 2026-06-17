@@ -24,7 +24,14 @@
     "enabled": true,
     "sql_path": "./src/sql/create_table.sql",
     "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
-    "table_type": "EXTERNAL_TABLE"
+    "table_type": "EXTERNAL_TABLE",
+    "parameters": {
+      "projection.enabled": "true",
+      "projection.ingestion_date.type": "date",
+      "projection.ingestion_date.range": "2020-01-01,NOW",
+      "projection.ingestion_date.format": "yyyy-MM-dd",
+      "storage.location.template": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/ingestion_date=${ingestion_date}/"
+    }
   },
   "lambda": {
     "enabled": true,
