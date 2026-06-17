@@ -23,7 +23,8 @@
   "athena": {
     "enabled": true,
     "sql_path": "./src/sql/create_table.sql",
-    "infer_schema": true
+    "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
+    "table_type": "EXTERNAL_TABLE"
   },
   "lambda": {
     "enabled": true,
