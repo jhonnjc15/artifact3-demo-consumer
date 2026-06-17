@@ -23,7 +23,7 @@
   "athena": {
     "ybwds_copa_brz": {
       "enabled": true,
-      "sql_path": "./src/sql/ybwds_copa_brz/alter_table.sql"
+      "sql_path": "./src/sql/ybwds_copa_brz/create_table.sql"
     }
   },
   "lambda": {
