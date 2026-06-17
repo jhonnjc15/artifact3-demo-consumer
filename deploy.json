@@ -21,17 +21,21 @@
     }
   },
   "athena": {
-    "enabled": true,
-    "sql_path": "./src/sql/create_table.sql"
+    "ybwds_copa_brz": {
+      "enabled": true,
+      "sql_path": "./src/sql/create_table.sql"
+    }
   },
   "lambda": {
-    "enabled": true,
-    "function_name": "lambda-demo-dev",
-    "description": "Lambda demo para probar el módulo",
-    "source_path": "./src/lambda",
-    "handler": "main.handler",
-    "runtime": "python3.11",
-    "timeout": 30,
-    "memory_size": 256
+    "demo": {
+      "enabled": true,
+      "function_name": "lambda-demo-dev",
+      "description": "Lambda demo para probar el módulo",
+      "source_path": "./src/lambda",
+      "handler": "main.handler",
+      "runtime": "python3.11",
+      "timeout": 30,
+      "memory_size": 256
+    }
   }
 }
