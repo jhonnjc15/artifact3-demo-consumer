@@ -22,7 +22,8 @@
   },
   "athena": {
     "enabled": true,
-    "sql_path": "./src/sql/create_table.sql"
+    "sql_path": "./src/sql/create_table.sql",
+    "infer_schema": true
   },
   "lambda": {
     "enabled": true,
