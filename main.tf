@@ -37,7 +37,7 @@ locals {
   common_tags = {
     environment = local.deploy_config.environment
     managed_by  = "terraform"
-    artifact    = "artefacto3-demo"
+    github_repo = var.github_repository
   }
 }
 

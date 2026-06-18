@@ -65,11 +65,15 @@ jobs:
 
       - name: Terraform init
         working-directory: artifact3-demo-consumer
-        run: terraform init
+        run: |
+          terraform init \
+            -backend-config="key=state/${{ github.event.repository.name }}/terraform.tfstate"
 
       - name: Terraform plan
         working-directory: artifact3-demo-consumer
-        run: terraform plan -out=tfplan
+        run: |
+          terraform plan -out=tfplan \
+            -var="github_repository=${{ github.repository }}"
 
       - name: Terraform apply
         if: ${{ inputs.apply }}

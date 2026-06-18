@@ -23,3 +23,8 @@ variable "lambda_role_arn" {
   description = "ARN del IAM Role existente que usará AWS Lambda."
   type        = string
 }
+
+variable "github_repository" {
+  description = "Repositorio GitHub que ejecuta el deploy (formato: owner/repo)."
+  type        = string
+}
