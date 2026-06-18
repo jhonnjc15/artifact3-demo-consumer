@@ -24,7 +24,7 @@
     "ybwds_copa_brz": {
       "enabled": true,
       "sql_path": "./src/sql/ybwds_copa_brz/create_table.sql",
-      "merge_existing": true
+      "merge_existing": false
     }
   },
   "lambda": {
