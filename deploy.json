@@ -24,6 +24,9 @@
     "ybwds_copa_brz": {
       "enabled": true,
       "sql_path": "./src/sql/ybwds_copa_brz/create_table.sql",
+      "database_name": "db_demo_dev",
+      "table_name": "ybwds_copa_brz",
+      "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
       "merge_existing": false
     }
   },
