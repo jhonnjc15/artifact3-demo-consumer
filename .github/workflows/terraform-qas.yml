@@ -17,7 +17,7 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    environment: qas
+    environment: dev
 
     steps:
       - name: Checkout consumer repo
