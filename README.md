@@ -17,7 +17,7 @@ Esta versión es simple a propósito:
 artifact3-demo-consumer/
 ├── .github/workflows/
 │   ├── local-test.yml
-│   └── terraform-dev.yml
+│   └── terraform-qas.yml
 ├── deploy.json
 ├── main.tf
 ├── variables.tf
@@ -32,7 +32,7 @@ artifact3-demo-consumer/
 
 El script `src/libs/demo_print_parameters.py`:
 
-1. Lee argumentos estilo Glue/AWS CLI, por ejemplo `--demo_env dev`.
+1. Lee argumentos estilo Glue/AWS CLI, por ejemplo `--demo_env qas`.
 2. Imprime todos los parámetros recibidos.
 3. Crea una tabla demo en memoria.
 4. Imprime la tabla en formato legible.
@@ -43,8 +43,8 @@ No necesita PySpark para esta prueba inicial.
 
 ```bash
 python src/libs/demo_print_parameters.py \
-  --JOB_NAME glue-demo-print-parameters-dev \
-  --demo_env dev \
+  --JOB_NAME glue-demo-print-parameters-qas \
+  --demo_env qas \
   --demo_owner data-engineering \
   --demo_table tabla_demo_parametros \
   --TempDir s3://bucket-temporal/temporary/
@@ -84,6 +84,7 @@ Y estas Variables:
 
 ```text
 AWS_REGION        = us-east-1
+ENVIRONMENT       = qas
 ARTIFACT_BUCKET   = <bucket-donde-subir-script-glue>
 TEMP_BUCKET       = <bucket-temporal-glue>
 GLUE_ROLE_ARN     = <arn-del-role-de-glue>
@@ -94,7 +95,7 @@ GLUE_ROLE_ARN     = <arn-del-role-de-glue>
 Ejecuta manualmente:
 
 ```text
-Terraform dev - deploy Glue Job
+Terraform qas - deploy Glue Job
 ```
 
 Parámetros:
@@ -105,3 +106,8 @@ apply = false
 ```
 
 Primero usa `apply = false` para revisar el plan. Luego usa `apply = true` para crear el Glue Job.
+
+El `deploy.json` ya no define un ambiente global. Terraform usa `var.environment`
+con default `qas`, filtra componentes mediante `enabled_environments` y deriva
+nombres finales como `glue-demo-print-parameters-qas`, `db_demo_qas` y
+`lambda-demo-qas`.

@@ -1,4 +1,4 @@
-CREATE EXTERNAL TABLE IF NOT EXISTS db_demo_dev.ybwds_copa_brz(
+CREATE EXTERNAL TABLE IF NOT EXISTS db_demo_qas.ybwds_copa_brz(
   mandt STRING,
   kunnr STRING,
   matnr STRING,

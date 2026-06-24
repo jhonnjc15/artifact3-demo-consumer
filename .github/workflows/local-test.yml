@@ -24,8 +24,8 @@ jobs:
       - name: Run demo Glue script locally
         run: |
           python src/libs/demo_print_parameters.py \
-            --JOB_NAME glue-demo-print-parameters-dev \
-            --demo_env dev \
+            --JOB_NAME glue-demo-print-parameters-qas \
+            --demo_env qas \
             --demo_owner data-engineering \
             --demo_table tabla_demo_parametros \
             --TempDir s3://bucket-temporal/temporary/ \

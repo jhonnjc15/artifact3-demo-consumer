@@ -1,12 +1,11 @@
 {
-  "environment": "dev",
   "glue_jobs": {
     "demo_print_parameters": {
       "enabled": true,
-      "job_name": "glue-demo-print-parameters-dev",
+      "enabled_environments": ["qas"],
+      "job_name": "glue-demo-print-parameters",
       "description": "Glue Job demo que imprime default arguments y una tabla creada en memoria",
       "script_local_path": "./src/libs/demo_print_parameters.py",
-      "script_s3_key": "glue/jobs/dev/demo_print_parameters.py",
       "glue_version": "4.0",
       "python_version": "3",
       "worker_type": "G.1X",
@@ -14,7 +13,6 @@
       "timeout": 30,
       "max_retries": 0,
       "default_arguments": {
-        "--demo_env": "dev",
         "--demo_owner": "data-engineering",
         "--demo_table": "tabla_demo_parametros"
       }
@@ -23,17 +21,26 @@
   "athena": {
     "ybwds_copa_brz": {
       "enabled": true,
+      "enabled_environments": ["qas"],
       "sql_path": "./src/sql/ybwds_copa_brz/create_table.sql",
-      "database_name": "db_demo_dev",
+      "database_name": "db_demo",
       "table_name": "ybwds_copa_brz",
-      "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
-      "merge_existing": false
+      "merge_existing": false,
+      "environment_values": {
+        "qas": {
+          "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
+          "parameters": {
+            "storage.location.template": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/ingestion_date=${ingestion_date}/"
+          }
+        }
+      }
     }
   },
   "lambda": {
     "demo": {
       "enabled": true,
-      "function_name": "lambda-demo-dev",
+      "enabled_environments": ["qas"],
+      "function_name": "lambda-demo",
       "description": "Lambda demo para probar el módulo",
       "source_path": "./src/lambda",
       "handler": "main.handler",

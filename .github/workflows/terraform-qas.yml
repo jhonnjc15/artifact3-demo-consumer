@@ -1,4 +1,4 @@
-name: Terraform dev - deploy Glue Job
+name: Terraform qas - deploy Glue Job
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: qas
 
     steps:
       - name: Checkout consumer repo
@@ -46,33 +46,35 @@ jobs:
       - name: Verify AWS identity
         run: aws sts get-caller-identity
 
-      - name: Create dev.auto.tfvars
+      - name: Create qas.auto.tfvars
         working-directory: artifact3-demo-consumer
         run: |
-          cat > dev.auto.tfvars <<EOF_TFVARS
-          aws_region      = "${{ secrets.AWS_REGION }}"
-          artifact_bucket = "${{ secrets.ARTIFACT_BUCKET }}"
-          temp_bucket     = "${{ secrets.TEMP_BUCKET }}"
-          glue_role_arn   = "${{ secrets.GLUE_ROLE_ARN }}"
-          lambda_role_arn = "${{ secrets.LAMBDA_ROLE_ARN }}"
+          cat > qas.auto.tfvars <<EOF_TFVARS
+          aws_region        = "${{ secrets.AWS_REGION }}"
+          environment       = "qas"
+          artifact_bucket   = "${{ secrets.ARTIFACT_BUCKET }}"
+          temp_bucket       = "${{ secrets.TEMP_BUCKET }}"
+          glue_role_arn     = "${{ secrets.GLUE_ROLE_ARN }}"
+          lambda_role_arn   = "${{ secrets.LAMBDA_ROLE_ARN }}"
           EOF_TFVARS
 
       - name: Show generated tfvars without sensitive values
         working-directory: artifact3-demo-consumer
         run: |
-          echo "dev.auto.tfvars created"
-          grep -E "aws_region|artifact_bucket|temp_bucket|glue_role_arn|lambda_role_arn" dev.auto.tfvars
+          echo "qas.auto.tfvars created"
+          grep -E "aws_region|environment|artifact_bucket|temp_bucket|glue_role_arn|lambda_role_arn" qas.auto.tfvars
 
       - name: Terraform init
         working-directory: artifact3-demo-consumer
         run: |
           terraform init \
-            -backend-config="key=state/${{ github.event.repository.name }}/terraform.tfstate"
+            -backend-config="key=state/qas/${{ github.event.repository.name }}/terraform.tfstate"
 
       - name: Terraform plan
         working-directory: artifact3-demo-consumer
         run: |
           terraform plan -out=tfplan \
+            -var="environment=qas" \
             -var="github_repository=${{ github.repository }}"
 
       - name: Terraform apply
