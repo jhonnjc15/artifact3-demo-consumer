@@ -12,7 +12,7 @@ locals {
       job_config,
       {
         script_local_path = abspath("${path.module}/${job_config.script_local_path}")
-        job_name          = "${trimspace(job_config.job_name)}-${var.environment}"
+        job_name          = trimspace(job_config.job_name)
         default_arguments = merge(try(job_config.default_arguments, {}), { "--demo_env" = var.environment })
       }
     )
@@ -25,7 +25,7 @@ locals {
       table_config,
       {
         sql_path      = abspath("${path.module}/${table_config.sql_path}")
-        database_name = try(trimspace(table_config.database_name), "") != "" ? "${trimspace(table_config.database_name)}_${var.environment}" : null
+        database_name = try(trimspace(table_config.database_name), "") != "" ? trimspace(table_config.database_name) : null
         s3_location   = try(trimspace(table_config.s3_location), "") != "" ? trimspace(table_config.s3_location) : try(table_config.environment_values[var.environment].s3_location, null)
         parameters    = merge(try(table_config.parameters, {}), try(table_config.environment_values[var.environment].parameters, {}))
       }
@@ -39,7 +39,7 @@ locals {
       lambda_config,
       {
         source_path   = abspath("${path.module}/${lambda_config.source_path}")
-        function_name = "${trimspace(lambda_config.function_name)}-${var.environment}"
+        function_name = trimspace(lambda_config.function_name)
       }
     )
     if try(lambda_config.enabled, true) && contains(try(lambda_config.enabled_environments, local.environments), var.environment)
@@ -53,7 +53,7 @@ locals {
 }
 
 module "glue_jobs" {
-  source = "git::https://github.com/jhonnjc15/artifact3-terraform-templates.git//modules/glue_job?ref=main"
+  source = "../artifact3-terraform-templates/modules/glue_job"
 
   artifact_bucket = var.artifact_bucket
   temp_bucket     = var.temp_bucket
@@ -67,7 +67,7 @@ module "glue_jobs" {
 
 module "athena" {
   for_each = local.enabled_athena_tables
-  source   = "git::https://github.com/jhonnjc15/artifact3-terraform-templates.git//modules/athena?ref=main"
+  source   = "../artifact3-terraform-templates/modules/athena"
 
   athena = each.value
   tags   = local.common_tags
@@ -75,7 +75,7 @@ module "athena" {
 
 module "lambda" {
   for_each = local.enabled_lambdas
-  source   = "git::https://github.com/jhonnjc15/artifact3-terraform-templates.git//modules/lambda?ref=main"
+  source   = "../artifact3-terraform-templates/modules/lambda"
 
   artifact_bucket = var.artifact_bucket
   lambda_role_arn = var.lambda_role_arn

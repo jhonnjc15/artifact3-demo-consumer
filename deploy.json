@@ -2,7 +2,7 @@
   "glue_jobs": {
     "demo_print_parameters": {
       "enabled": true,
-      "enabled_environments": ["qas"],
+      "enabled_environments": ["dev"],
       "job_name": "glue-demo-print-parameters",
       "description": "Glue Job demo que imprime default arguments y una tabla creada en memoria",
       "script_local_path": "./src/libs/demo_print_parameters.py",
@@ -21,13 +21,13 @@
   "athena": {
     "ybwds_copa_brz": {
       "enabled": true,
-      "enabled_environments": ["qas"],
+      "enabled_environments": ["dev"],
       "sql_path": "./src/sql/ybwds_copa_brz/create_table.sql",
       "database_name": "db_demo",
       "table_name": "ybwds_copa_brz",
       "merge_existing": false,
       "environment_values": {
-        "qas": {
+        "dev": {
           "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
           "parameters": {
             "storage.location.template": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/ingestion_date=${ingestion_date}/"
@@ -39,7 +39,7 @@
   "lambda": {
     "demo": {
       "enabled": true,
-      "enabled_environments": ["qas"],
+      "enabled_environments": ["dev"],
       "function_name": "lambda-demo",
       "description": "Lambda demo para probar el módulo",
       "source_path": "./src/lambda",

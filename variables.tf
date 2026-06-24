@@ -5,9 +5,9 @@ variable "aws_region" {
 }
 
 variable "environment" {
-  description = "Ambiente objetivo del despliegue. Actualmente se usa qas; dev/prd quedan preparados para una fase posterior."
+  description = "Ambiente objetivo del despliegue. Actualmente el demo usa dev; qas/prd quedan preparados para una fase posterior."
   type        = string
-  default     = "qas"
+  default     = "dev"
 
   validation {
     condition     = contains(["dev", "qas", "prd"], var.environment)
