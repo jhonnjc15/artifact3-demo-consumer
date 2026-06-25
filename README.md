@@ -143,10 +143,5 @@ Un Glue Job puede declarar que produce datos para una tabla Athena usando
 ```
 
 Terraform mantiene los modulos separados: `glue_job` crea el job y `athena`
-crea la tabla. El consumer conecta ambos y agrega al Glue Job estos argumentos:
-
-```text
---athena_database
---athena_table
---output_path
-```
+crea la tabla. `athena_table_key` es una relacion logica; no modifica los
+`default_arguments` del Glue Job.
