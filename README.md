@@ -71,19 +71,15 @@ Local test - Glue demo script
 
 Este workflow no usa AWS. Solo prueba que el script imprime parámetros y tabla.
 
-### 3. Configurar variables/secrets para Terraform
+### 3. Configurar secrets para Terraform
 
-En el repo consumidor, configura estos Secrets:
+En el repo consumidor, configura estos Secrets en GitHub Environment `dev`:
 
 ```text
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
-```
-
-Y estas Variables en GitHub Environment `dev`:
-
-```text
 AWS_REGION        = us-east-1
+TF_STATE_BUCKET   = <bucket-state-terraform>
 ARTIFACT_BUCKET   = <bucket-donde-subir-script-glue>
 TEMP_BUCKET       = <bucket-temporal-glue>
 GLUE_ROLE_ARN     = <arn-del-role-de-glue>
@@ -112,3 +108,45 @@ con default `dev` para filtrar componentes mediante `enabled_environments`,
 seleccionar `environment_values.dev`, separar state y etiquetar recursos. Como
 cada ambiente vive en una cuenta AWS distinta, los nombres fisicos no llevan
 sufijo de ambiente: `glue-demo-print-parameters`, `db_demo` y `lambda-demo`.
+
+## Relacion Glue Job - Athena
+
+Un Glue Job puede declarar que produce datos para una tabla Athena usando
+`athena_table_key`:
+
+```json
+{
+  "glue_jobs": {
+    "transform_ventas": {
+      "enabled": true,
+      "enabled_environments": ["dev"],
+      "job_name": "glue-transform-ventas",
+      "script_local_path": "./src/libs/transform_ventas.py",
+      "athena_table_key": "ventas_transformadas"
+    }
+  },
+  "athena": {
+    "ventas_transformadas": {
+      "enabled": true,
+      "enabled_environments": ["dev"],
+      "sql_path": "./src/sql/create_table_ventas.sql",
+      "database_name": "db_ventas",
+      "table_name": "ventas_transformadas",
+      "environment_values": {
+        "dev": {
+          "s3_location": "s3://bucket/output/ventas/"
+        }
+      }
+    }
+  }
+}
+```
+
+Terraform mantiene los modulos separados: `glue_job` crea el job y `athena`
+crea la tabla. El consumer conecta ambos y agrega al Glue Job estos argumentos:
+
+```text
+--athena_database
+--athena_table
+--output_path
+```

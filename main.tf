@@ -13,7 +13,15 @@ locals {
       {
         script_local_path = abspath("${path.module}/${job_config.script_local_path}")
         job_name          = trimspace(job_config.job_name)
-        default_arguments = merge(try(job_config.default_arguments, {}), { "--demo_env" = var.environment })
+        default_arguments = merge(
+          try(job_config.default_arguments, {}),
+          { "--demo_env" = var.environment },
+          try(trimspace(job_config.athena_table_key), "") != "" ? {
+            "--athena_database" = local.enabled_athena_tables[trimspace(job_config.athena_table_key)].database_name
+            "--athena_table"    = local.enabled_athena_tables[trimspace(job_config.athena_table_key)].table_name
+            "--output_path"     = local.enabled_athena_tables[trimspace(job_config.athena_table_key)].s3_location
+          } : {}
+        )
       }
     )
     if try(job_config.enabled, true) && contains(try(job_config.enabled_environments, local.environments), var.environment)
@@ -63,6 +71,8 @@ module "glue_jobs" {
   glue_jobs = local.enabled_glue_jobs
 
   tags = local.common_tags
+
+  depends_on = [module.athena]
 }
 
 module "athena" {
