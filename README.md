@@ -2,13 +2,13 @@
 
 Repositorio consumidor para probar el Artefacto 3 con GitHub Actions.
 
-Esta versión es simple a propósito:
+Esta version es simple a proposito:
 
-- No tiene validaciones pre-deploy.
+- Ejecuta validaciones pre-deploy reutilizables desde `artifact3-terraform-templates`.
 - No tiene archivo de configuración JSON del job.
 - No tiene carpeta `examples`.
 - El Glue Job demo solo imprime los parámetros recibidos y una tabla creada en memoria.
-- El `deploy.json` solo define parámetros de despliegue del Glue Job.
+- El `deploy.json` define Glue Jobs, tablas Athena y Lambdas de ejemplo.
 - El módulo Terraform central se consume desde el repo `artifact3-terraform-templates`, clonado como carpeta hermana en el workflow.
 
 ## Estructura
@@ -102,6 +102,18 @@ apply = false
 ```
 
 Primero usa `apply = false` para revisar el plan. Luego usa `apply = true` para crear el Glue Job.
+
+Antes de `terraform init`, el workflow ejecuta las validaciones reutilizables del
+repo de templates:
+
+```text
+../artifact3-terraform-templates/modules/glue_job/validations/validate.sh
+../artifact3-terraform-templates/modules/lambda/validations/validate.sh
+```
+
+El Glue Job demo tiene `validations.enabled = false` porque no es un script Glue
+real con `GlueContext`, lectura y escritura de destino. Los jobs productivos
+deben dejar las validaciones activas.
 
 El `deploy.json` ya no define un ambiente global. Terraform usa `var.environment`
 con default `dev` para filtrar componentes mediante `enabled_environments`,

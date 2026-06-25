@@ -13,6 +13,9 @@
       "timeout": 30,
       "max_retries": 0,
       "athena_table_key": "ybwds_copa_brz",
+      "validations": {
+        "enabled": false
+      },
       "default_arguments": {
         "--demo_owner": "data-engineering",
         "--demo_table": "tabla_demo_parametros"
