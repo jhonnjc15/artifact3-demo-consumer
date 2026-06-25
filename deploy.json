@@ -12,6 +12,7 @@
       "number_of_workers": 2,
       "timeout": 30,
       "max_retries": 0,
+      "athena_table_key": "ybwds_copa_brz",
       "default_arguments": {
         "--demo_owner": "data-engineering",
         "--demo_table": "tabla_demo_parametros"
