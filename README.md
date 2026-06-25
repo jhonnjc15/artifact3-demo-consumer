@@ -111,9 +111,9 @@ repo de templates:
 ../artifact3-terraform-templates/modules/lambda/validations/validate.sh
 ```
 
-El Glue Job demo tiene `validations.enabled = false` porque no es un script Glue
-real con `GlueContext`, lectura y escritura de destino. Los jobs productivos
-deben dejar las validaciones activas.
+El Glue Job demo mantiene un modo local simple, pero incluye una funcion con la
+estructura minima de Glue (`GlueContext`, lectura, escritura y `try/except`) para
+pasar las validaciones pre-deploy.
 
 El `deploy.json` ya no define un ambiente global. Terraform usa `var.environment`
 con default `dev` para filtrar componentes mediante `enabled_environments`,
