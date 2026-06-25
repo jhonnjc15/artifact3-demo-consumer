@@ -14,7 +14,7 @@
       "max_retries": 0,
       "athena_table_key": "ybwds_copa_brz",
       "validations": {
-        "enabled": false
+        "enabled": true
       },
       "default_arguments": {
         "--demo_owner": "data-engineering",
