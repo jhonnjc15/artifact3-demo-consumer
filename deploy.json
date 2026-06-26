@@ -38,6 +38,24 @@
           }
         }
       }
+    },
+    "ybwds_copa_brz_iceberg": {
+      "enabled": true,
+      "enabled_environments": ["dev"],
+      "sql_path": "./src/sql/ybwds_copa_brz/create_table_iceberg.sql",
+      "database_name": "db_demo",
+      "table_name": "ybwds_copa_brz_iceberg",
+      "merge_existing": false,
+      "environment_values": {
+        "dev": {
+          "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
+          "parameters": {
+            "table_type": "ICEBERG",
+            "format": "parquet",
+            "write_compression": "snappy"
+          }
+        }
+      }
     }
   },
   "lambda": {
