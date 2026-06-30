@@ -18,7 +18,6 @@ LOCATION
   's3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/'
 TBLPROPERTIES (
   'classification' = 'parquet',
-  'table_type' = 'EXTERNAL_TABLE',
   'projection.enabled' = 'true',
   'projection.ingestion_date.type' = 'date',
   'projection.ingestion_date.range' = '2020-01-01,NOW',
