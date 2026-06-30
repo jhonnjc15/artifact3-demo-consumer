@@ -3,8 +3,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS db_demo.ybwds_copa_brz_external_2 (
   kunnr STRING,
   matnr STRING,
   nt_wt_kg DOUBLE,
-  cost_val_s DOUBLE,
-  vkorg STRING
+  cost_val_s DOUBLE
 )
 PARTITIONED BY (
   ingestion_date STRING
