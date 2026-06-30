@@ -4,7 +4,7 @@
       "enabled": true,
       "enabled_environments": ["dev"],
       "name": "db_demo",
-      "mode": "existing"
+      "mode": "create"
     }
   },
   "glue_jobs": {
@@ -47,20 +47,18 @@
         }
       }
     },
-    "ybwds_copa_brz_iceberg": {
+    "ybwds_copa_brz_external_2": {
       "enabled": true,
       "enabled_environments": ["dev"],
-      "sql_path": "./src/sql/ybwds_copa_brz/create_table_iceberg.sql",
+      "sql_path": "./src/sql/ybwds_copa_brz/create_table_external_2.sql",
       "database_key": "demo",
-      "table_name": "ybwds_copa_brz_iceberg",
+      "table_name": "ybwds_copa_brz_external_2",
       "merge_existing": false,
       "environment_values": {
         "dev": {
           "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
           "parameters": {
-            "table_type": "ICEBERG",
-            "format": "parquet",
-            "write_compression": "snappy"
+            "classification": "parquet"
           }
         }
       }
