@@ -40,10 +40,7 @@
       "merge_existing": false,
       "environment_values": {
         "dev": {
-          "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
-          "parameters": {
-            "storage.location.template": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/ingestion_date=${ingestion_date}/"
-          }
+          "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/"
         }
       }
     },
@@ -56,10 +53,20 @@
       "merge_existing": false,
       "environment_values": {
         "dev": {
-          "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/",
-          "parameters": {
-            "classification": "parquet"
-          }
+          "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/"
+        }
+      }
+    },
+    "ybwds_copa_brz_external_3": {
+      "enabled": true,
+      "enabled_environments": ["dev"],
+      "sql_path": "./src/sql/ybwds_copa_brz/create_table_external_3.sql",
+      "database_key": "demo",
+      "table_name": "ybwds_copa_brz_external_3",
+      "merge_existing": false,
+      "environment_values": {
+        "dev": {
+          "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/"
         }
       }
     }
