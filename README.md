@@ -2,6 +2,8 @@
 
 Repositorio consumidor para probar el Artefacto 3 con GitHub Actions.
 
+Guia funcional detallada: [`DOCUMENTO_FUNCIONAL.md`](DOCUMENTO_FUNCIONAL.md).
+
 Esta version es simple a proposito:
 
 - Ejecuta validaciones pre-deploy reutilizables desde `artifact3-terraform-templates`.
@@ -24,8 +26,10 @@ artifact3-demo-consumer/
 ├── outputs.tf
 ├── versions.tf
 ├── terraform.tfvars.example
-└── src/libs/
-    └── demo_print_parameters.py
+└── src/
+    ├── libs/demo_print_parameters.py
+    ├── lambda/main.py
+    └── sql/ybwds_copa_brz/create_table.sql
 ```
 
 ## Qué hace el job demo
@@ -103,6 +107,12 @@ apply = false
 
 Primero usa `apply = false` para revisar el plan. Luego usa `apply = true` para crear el Glue Job.
 
+El workflow usa backend S3 parcial y guarda el state en:
+
+```text
+state/artifact3-demo-consumer/terraform.tfstate
+```
+
 Antes de `terraform init`, el workflow ejecuta las validaciones reutilizables del
 repo de templates:
 
@@ -121,6 +131,10 @@ seleccionar `environment_values.dev`, separar state y etiquetar recursos. Como
 cada ambiente vive en una cuenta AWS distinta, los nombres fisicos no llevan
 sufijo de ambiente: `glue-demo-print-parameters`, `db_demo` y `lambda-demo`.
 
+El bloque `databases` declara las Glue Databases una sola vez. Una tabla Athena
+referencia una database mediante `database_key`; si `mode = "existing"`,
+Terraform no intenta crear la database y solo crea la tabla.
+
 ## Relacion Glue Job - Athena
 
 Un Glue Job puede declarar que produce datos para una tabla Athena usando
@@ -128,6 +142,14 @@ Un Glue Job puede declarar que produce datos para una tabla Athena usando
 
 ```json
 {
+  "databases": {
+    "ventas": {
+      "enabled": true,
+      "enabled_environments": ["dev"],
+      "name": "db_ventas",
+      "mode": "existing"
+    }
+  },
   "glue_jobs": {
     "transform_ventas": {
       "enabled": true,
@@ -142,7 +164,7 @@ Un Glue Job puede declarar que produce datos para una tabla Athena usando
       "enabled": true,
       "enabled_environments": ["dev"],
       "sql_path": "./src/sql/create_table_ventas.sql",
-      "database_name": "db_ventas",
+      "database_key": "ventas",
       "table_name": "ventas_transformadas",
       "environment_values": {
         "dev": {
@@ -157,3 +179,15 @@ Un Glue Job puede declarar que produce datos para una tabla Athena usando
 Terraform mantiene los modulos separados: `glue_job` crea el job y `athena`
 crea la tabla. `athena_table_key` es una relacion logica; no modifica los
 `default_arguments` del Glue Job.
+
+## Trazabilidad
+
+Los recursos reciben tags comunes desde Terraform:
+
+```text
+environment = dev
+managed_by  = terraform
+github_repo = <owner>/artifact3-demo-consumer
+```
+
+`github_repo` permite identificar que repositorio consumer creo los recursos.

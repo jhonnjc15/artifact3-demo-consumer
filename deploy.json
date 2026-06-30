@@ -1,4 +1,12 @@
 {
+  "databases": {
+    "demo": {
+      "enabled": true,
+      "enabled_environments": ["dev"],
+      "name": "db_demo",
+      "mode": "existing"
+    }
+  },
   "glue_jobs": {
     "demo_print_parameters": {
       "enabled": true,
@@ -27,7 +35,7 @@
       "enabled": true,
       "enabled_environments": ["dev"],
       "sql_path": "./src/sql/ybwds_copa_brz/create_table.sql",
-      "database_name": "db_demo",
+      "database_key": "demo",
       "table_name": "ybwds_copa_brz",
       "merge_existing": false,
       "environment_values": {
@@ -43,7 +51,7 @@
       "enabled": true,
       "enabled_environments": ["dev"],
       "sql_path": "./src/sql/ybwds_copa_brz/create_table_iceberg.sql",
-      "database_name": "db_demo",
+      "database_key": "demo",
       "table_name": "ybwds_copa_brz_iceberg",
       "merge_existing": false,
       "environment_values": {
