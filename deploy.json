@@ -5,6 +5,12 @@
       "enabled_environments": ["dev"],
       "name": "db_demo",
       "mode": "create"
+    },
+    "comercial_valor_agregado": {
+      "enabled": true,
+      "enabled_environments": ["dev"],
+      "name": "comercial_valor_agregado_brz",
+      "mode": "existing"
     }
   },
   "glue_jobs": {
@@ -63,6 +69,19 @@
       "sql_path": "./src/sql/ybwds_copa_brz/create_table_external_3.sql",
       "database_key": "demo",
       "table_name": "ybwds_copa_brz_external_3",
+      "merge_existing": false,
+      "environment_values": {
+        "dev": {
+          "s3_location": "s3://bronze-1358-0891-8691/COMERCIAL/ybwds_copa_brz/"
+        }
+      }
+    },
+    "tabla_prueba_ybwds_copa_brz": {
+      "enabled": true,
+      "enabled_environments": ["dev"],
+      "sql_path": "./src/sql/comercial_valor_agregado_brz/create_table_prueba_ybwds_copa_brz.sql",
+      "database_key": "comercial_valor_agregado",
+      "table_name": "tabla_prueba_ybwds_copa_brz",
       "merge_existing": false,
       "environment_values": {
         "dev": {
